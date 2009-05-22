@@ -65,3 +65,6 @@ nmap \t :NERDTreeToggle<CR>
 
 autocmd FileType ruby,cmake,php set ts=2 sw=2 et autoindent smartindent smarttab
 autocmd FileType python set ts=4 sw=4 et autoindent smartindent smarttab
+
+let NERDTreeIgnore=['\.vim$', '\~$', '\.pyc']
+
