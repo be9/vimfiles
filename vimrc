@@ -7,10 +7,12 @@ set noet
 set modeline
 
 if has("gui_macvim")
+  " Font for the Mac
 	set guifont=Monaco:h12.00
 	set noanti
 elseif has("gui")
-
+  " Font on the Linux
+  set guifont=Terminus\ 11
 endif
 if has("gui")
 	color metacosm
