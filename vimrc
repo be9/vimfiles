@@ -141,6 +141,8 @@ if has("gui_macvim")
     " Font for the Mac
     set guifont=Monaco:h12.00
     set noanti
+    set columns=115
+    set lines=42
 elseif has("gui")
     " Font on the Linux
     set guifont=Terminus\ 11
