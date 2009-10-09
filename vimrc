@@ -130,7 +130,7 @@ filetype indent on
 syntax on
 
 "tell the term has 256 colors
-set t_Co=256
+"set t_Co=256
 
 "hide buffers when not displayed
 set hidden
