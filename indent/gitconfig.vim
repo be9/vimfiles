@@ -1,7 +1,6 @@
 " Vim indent file
 " Language:	git config file
-" Maintainer:	Tim Pope <vimNOSPAM@tpope.info>
-" Last Change:	2008 Jun 04
+" Maintainer:	Tim Pope <vimNOSPAM@tpope.org>
 
 if exists("b:did_indent")
   finish
