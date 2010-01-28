@@ -159,6 +159,7 @@ map Q gq
 " In text files, always limit the width of text to 78 characters
 autocmd BufRead *.txt set tw=78
 autocmd BufRead Thorfile,*.thor setf ruby
+autocmd BufRead *.ldg setf ledger
 
 "Make <c-l> clear the highlight as well as redraw
 nnoremap <C-L> :nohls<CR><C-L>
@@ -184,6 +185,9 @@ nmap <silent> <Leader>p :NERDTreeToggle<CR>
 
 autocmd FileType ruby,cmake,php set ts=2 sw=2 smartindent smarttab
 autocmd FileType python set ts=4 sw=4 smartindent smarttab
+autocmd FileType html imap <F2> «
+autocmd FileType html imap <F3> »
+autocmd FileType html imap <F4> &nbsp;— 
 
 let NERDTreeIgnore=['\.vim$', '\~$', '\.pyc']
 
