@@ -193,17 +193,8 @@ function! s:wrap(string,char,type,...)
             let dounmapb= 1
             " Hide from AsNeeded
             exe "cn"."oremap > <CR>"
-            exe "cn"."oremap % %<C-V>"
-            "cm ap > <C-R>=getcmdline() =~ '^[^%?].*[%?]$' ? "\026\076" : "\026\076\015"<CR>
         endif
         let default = ""
-        if !maparg("%","c")
-            " This is to help when typing things like
-            " <a href="/images/<%= @image.filename %>">
-            " The downside is it breaks backspace, so lets disable it for now
-            "let dounmapp= 1
-            "exe "cn"."oremap % %<C-V>"
-        endif
         if newchar ==# "T"
             if !exists("s:lastdel")
                 let s:lastdel = ""
@@ -212,14 +203,8 @@ function! s:wrap(string,char,type,...)
         endif
         let tag = input("<",default)
         echo "<".substitute(tag,'>*$','>','')
-        "if dounmapr
-            "silent! cunmap <CR>
-        "endif
         if dounmapb
             silent! cunmap >
-        endif
-        if dounmapp
-            silent! cunmap %
         endif
         if tag != ""
             let tag = substitute(tag,'>*$','','')
@@ -422,9 +407,9 @@ function! s:dosurround(...) " {{{1
     call setreg('"',"")
     let strcount = (scount == 1 ? "" : scount)
     if char == '/'
-        exe 'norm '.strcount.'[/d'.strcount.']/'
+        exe 'norm! '.strcount.'[/d'.strcount.']/'
     else
-        exe 'norm d'.strcount.'i'.char
+        exe 'norm! d'.strcount.'i'.char
     endif
     let keeper = getreg('"')
     let okeeper = keeper " for reindent below
@@ -450,7 +435,7 @@ function! s:dosurround(...) " {{{1
     else
         " One character backwards
         call search('.','bW')
-        exe "norm da".char
+        exe "norm! da".char
     endif
     let removed = getreg('"')
     let rem2 = substitute(removed,'\n.*','','')
