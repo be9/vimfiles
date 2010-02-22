@@ -188,6 +188,7 @@ autocmd FileType python set ts=4 sw=4 smartindent smarttab
 autocmd FileType html imap <F2> «
 autocmd FileType html imap <F3> »
 autocmd FileType html imap <F4> &nbsp;— 
+autocmd BufNewFile,BufRead Gemfile setf ruby
 
 let NERDTreeIgnore=['\.vim$', '\~$', '\.pyc']
 
@@ -203,3 +204,5 @@ function! s:HighlightExcessColumns(width)
         echomsg "HighlightExcessColumns: set a &textwidth, or pass one in"
     endif
 endfunction
+
+
