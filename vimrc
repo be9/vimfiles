@@ -203,3 +203,8 @@ function! s:HighlightExcessColumns(width)
         echomsg "HighlightExcessColumns: set a &textwidth, or pass one in"
     endif
 endfunction
+
+let g:clj_highlight_builtins=1
+let g:clj_paren_rainbow=1
+
+
