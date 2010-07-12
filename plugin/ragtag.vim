@@ -1,96 +1,7 @@
 " ragtag.vim - Ghetto XML/HTML mappings (formerly allml.vim)
 " Author:       Tim Pope <vimNOSPAM@tpope.org>
+" Version:      2.0
 " GetLatestVimScripts: 1896 1 :AutoInstall: ragtag.vim
-" $Id$
-
-" Distributable under the same terms as Vim itself (see :help license)
-
-" These are my personal mappings for XML/XHTML editing, particularly with
-" dynamic content like PHP/ASP/eRuby.  Because they are personal, less effort
-" has been put into customizability (if you like these mappings but the lack
-" of customizability poses an issue for you, let me know).  Examples shown are
-" for eRuby.
-"
-" The table below shows what happens if the binding is pressed on the end of a
-" line consisting of "foo".
-"
-" Mapping       Changed to   (cursor = ^)
-" <C-X>=        foo<%= ^ %>
-" <C-X>+        <%= foo^ %>
-" <C-X>-        foo<% ^ %>
-" <C-X>_        <% foo^ %>
-" <C-X>'        foo<%# ^ %>         (mnemonic: ' is a comment in ASP with VBS)
-" <C-X>"        <%# foo^ %>
-" <C-X><Space>  <foo>^</foo>
-" <C-X><CR>     <foo>\n^\n</foo>
-" <C-X>/        Last HTML tag closed (requires Vim 7)
-" <C-X>!        <!DOCTYPE...>/<?xml ...?> (Vim 7 allows selection from menu)
-" <C-X>@        <link rel="stylesheet" type="text/css" href="/stylesheets/^.css" />
-"               (mnemonic: @ is used for importing in a CSS file)
-" <C-X>#        <meta http-equiv="Content-Type" ... />
-" <C-X>$        <script type="text/javascript" src="/javascripts/^.css"></script>
-"               (mnemonic: $ is valid in javascript identifiers)
-"
-" For the bindings that generate HTML tag pairs, in a few cases, attributes
-" will be automatically added.  For example, script becomes
-" <script type="text/javascript">
-"
-" Note that the doctype insertion uses Vim completion, which in 7.0 includes
-" erroneous doctypes.  Lowercase the first occurance of "HTML" to fix them.
-"
-" Encoding:
-"
-" Mappings are provided to encode URLs and escape HTML/XML.  By default, they
-" are only only available in the buffers where ragtag.vim is activated.  If
-" you want them globally, simply add mappingss for each "global map" in the
-" table below that you want.  If you want all of them with a <Leader> prefix,
-" you can let g:ragtag_global_maps = 1.  (This also gets you a global <C-X>/
-" map.)
-"
-" The first four maps below take a {motion} to specify the text when used in
-" normal mode, and also work in visual mode.  The second four are for normal
-" mode only and always encode/decode the current line.
-"
-" Default map      Global map
-" <LocalLeader>eu  <Plug>ragtagUrlEncode
-" <LocalLeader>du  <Plug>ragtagUrlDecode
-" <LocalLeader>ex  <Plug>ragtagXmlEncode
-" <LocalLeader>dx  <Plug>ragtagXmlDecode
-" <LocalLeader>euu <Plug>ragtagLineUrlEncode
-" <LocalLeader>duu <Plug>ragtagLineUrlDecode
-" <LocalLeader>exx <Plug>ragtagLineXmlEncode
-" <LocalLeader>dxx <Plug>ragtagLineXmlDecode
-"
-" Don't let the names fool you, the XmlEncode mappings work on HTML as well,
-" and add a few additional escaped characters if the buffer is confirmed to
-" contain HTML.
-"
-" There are also a few insert mode mappings.  The first two take the next
-" character to be typed and encode it.  The second two put Vim into a special
-" mode where characters are encoded automatically when required.  This is
-" quite cool for demos but is of limited practical value otherwise.
-"
-" <C-V>%           <Plug>ragtagUrlV
-" <C-V>&           <Plug>ragtagXmlV
-" <C-X>%           <Plug>ragtagUrlEncode
-" <C-X>&           <Plug>ragtagXmlEncode
-"
-" Surroundings:
-"
-" Combined with surround.vim, you also get three "replacements".  Below, the ^
-" indicates the location of the wrapped text.  See the documentation of
-" surround.vim for details.
-"
-" Character     Replacement
-" -             <% ^ %>
-" =             <%= ^ %>
-" #             <%# ^ %>
-
-" You might find these helpful in your vimrc
-"
-" inoremap <M-o>       <Esc>o
-" inoremap <C-j>       <Down>
-" let g:ragtag_global_maps = 1
 
 if exists("g:loaded_ragtag") || &cp
   finish
@@ -101,7 +12,7 @@ if has("autocmd")
   augroup ragtag
     autocmd!
     autocmd FileType *html*,wml,xml,xslt,xsd,jsp    call s:Init()
-    autocmd FileType php,asp*,cf,mason,eruby        call s:Init()
+    autocmd FileType php,asp*,cf,mason,eruby,liquid call s:Init()
     if version >= 700
       autocmd InsertLeave * call s:Leave()
     endif
@@ -170,9 +81,11 @@ function! s:Init()
     if !exists("b:surround_101")
       let b:surround_101 = "[% \r %]\n[% END %]"
     endif
-  elseif &ft =~ "django"
-    inoremap <buffer> <C-X><Lt> {{
-    inoremap <buffer> <C-X>>    }}
+  elseif &ft =~ "django" || &ft == "liquid"
+    inoremap <buffer> <SID>ragtagOopen    {{<Space>
+    inoremap <buffer> <SID>ragtagOclose   <Space>}}<Left><Left>
+    inoremap <buffer> <C-X><Lt> {%
+    inoremap <buffer> <C-X>>    %}
     let b:surround_45 = "{% \r %}"
     let b:surround_61 = "{{ \r }}"
   elseif &ft == "mason"
@@ -196,8 +109,8 @@ function! s:Init()
     let b:surround_45 = "<% \r %>"
     let b:surround_61 = "<%= \r %>"
   endif
-  imap     <buffer> <C-X>= <SID>ragtagOopen<SID>ragtagOclose<Left>
-  imap     <buffer> <C-X>+ <C-V><NL><Esc>I<SID>ragtagOopen<Space><Esc>A<Space><SID>ragtagOclose<Esc>F<NL>s
+  imap <script> <buffer> <C-X>= <SID>ragtagOopen<SID>ragtagOclose<Left>
+  imap <script> <buffer> <C-X>+ <C-V><NL><Esc>I<SID>ragtagOopen<Esc>A<SID>ragtagOclose<Esc>F<NL>s
   " <%\n\n%>
   if &ft == "cf"
     inoremap <buffer> <C-X>] <cfscript><CR></cfscript><Esc>O
@@ -216,13 +129,13 @@ function! s:Init()
     inoremap  <buffer> <C-X>- <cf><Left>
     inoremap  <buffer> <C-X>_ <cfset ><Left>
   else
-    imap      <buffer> <C-X>- <C-X><Lt><Space><Space><C-X>><Esc>2hi
-    imap      <buffer> <C-X>_ <C-V><NL><Esc>I<C-X><Lt><Space><Esc>A<Space><C-X>><Esc>F<NL>s
+    imap <script> <buffer> <C-X>- <C-X><Lt><Space><Space><C-X>><Esc>2hi
+    imap <script> <buffer> <C-X>_ <C-V><NL><Esc>I<C-X><Lt><Space><Esc>A<Space><C-X>><Esc>F<NL>s
   endif
   " Comments
   if &ft =~ '^asp'
-    imap     <buffer> <C-X>'     <C-X><Lt>'<Space><Space><C-X>><Esc>2hi
-    imap     <buffer> <C-X>"     <C-V><NL><Esc>I<C-X><Lt>'<Space><Esc>A<Space><C-X>><Esc>F<NL>s
+    imap <script> <buffer> <C-X>' <C-X><Lt>'<Space><Space><C-X>><Esc>2hi
+    imap <script> <buffer> <C-X>" <C-V><NL><Esc>I<C-X><Lt>'<Space><Esc>A<Space><C-X>><Esc>F<NL>s
     let b:surround_35 = maparg("<C-X><Lt>","i")."' \r ".maparg("<C-X>>","i")
   elseif &ft == "jsp"
     inoremap <buffer> <C-X>'     <Lt>%--<Space><Space>--%><Esc>4hi
@@ -237,23 +150,19 @@ function! s:Init()
     inoremap <buffer> <C-X>'     <Lt>!--<Space><Space>--><Esc>3hi
     inoremap <buffer> <C-X>"     <C-V><NL><Esc>I<!--<Space><Esc>A<Space>--><Esc>F<NL>s
     let b:surround_35 = "<!-- \r -->"
-  elseif &ft == "django"
+  elseif &ft == "django" || &ft == "htmldjango"
     inoremap <buffer> <C-X>'     {#<Space><Space>#}<Esc>2hi
     inoremap <buffer> <C-X>"     <C-V><NL><Esc>I<C-X>{#<Space><Esc>A<Space>#}<Esc>F<NL>s
     let b:surround_35 = "{# \r #}"
+  elseif &ft == "liquid"
+    inoremap <buffer> <C-X>'     {%<Space>comment<Space>%}{%<Space>endcomment<Space>%}<Esc>15hi
+    inoremap <buffer> <C-X>"     <C-V><NL><Esc>I<C-X>{%<Space>comment<Space>%}<Esc>A{%<Space>endcomment<Space>%}<Esc>F<NL>s
+    let b:surround_35 = "{% comment %}\r{% endcomment %}"
   else
-    imap     <buffer> <C-X>'     <C-X><Lt>#<Space><Space><C-X>><Esc>2hi
-    imap     <buffer> <C-X>"     <C-V><NL><Esc>I<C-X><Lt>#<Space><Esc>A<Space><C-X>><Esc>F<NL>s
+    imap <script> <buffer> <C-X>' <C-X><Lt>#<Space><Space><C-X>><Esc>2hi
+    imap <script> <buffer> <C-X>" <C-V><NL><Esc>I<C-X><Lt>#<Space><Esc>A<Space><C-X>><Esc>F<NL>s
     let b:surround_35 = maparg("<C-X><Lt>","i")."# \r ".maparg("<C-X>>","i")
   endif
-  map  <buffer> <LocalLeader>eu  <Plug>ragtagUrlEncode
-  map  <buffer> <LocalLeader>du  <Plug>ragtagUrlDecode
-  map  <buffer> <LocalLeader>ex  <Plug>ragtagXmlEncode
-  map  <buffer> <LocalLeader>dx  <Plug>ragtagXmlDecode
-  nmap <buffer> <LocalLeader>euu <Plug>ragtagLineUrlEncode
-  nmap <buffer> <LocalLeader>duu <Plug>ragtagLineUrlDecode
-  nmap <buffer> <LocalLeader>exx <Plug>ragtagLineXmlEncode
-  nmap <buffer> <LocalLeader>dxx <Plug>ragtagLineXmlDecode
   imap <buffer> <C-X>%           <Plug>ragtagUrlEncode
   imap <buffer> <C-X>&           <Plug>ragtagXmlEncode
   imap <buffer> <C-V>%           <Plug>ragtagUrlV
@@ -429,92 +338,6 @@ function! s:tagextras()
   endif
 endfunction
 
-function! s:UrlEncode(str)
-  return substitute(a:str,'[^A-Za-z0-9_.~-]','\="%".printf("%02X",char2nr(submatch(0)))','g')
-endfunction
-
-function! s:UrlDecode(str)
-  let str = substitute(substitute(substitute(a:str,'%0[Aa]\n$','%0A',''),'%0[Aa]','\n','g'),'+',' ','g')
-  return substitute(str,'%\(\x\x\)','\=nr2char("0x".submatch(1))','g')
-endfunction
-
-let s:entities = "\u00a0nbsp\n\u00a9copy\n\u00ablaquo\n\u00aereg\n\u00b5micro\n\u00b6para\n\u00bbraquo\n\u2018lsquo\n\u2019rsquo\n\u201cldquo\n\u201drdquo\n\u2026hellip\n"
-
-function! s:XmlEncode(str)
-  let str = a:str
-  let str = substitute(str,'&','\&amp;','g')
-  let str = substitute(str,'<','\&lt;','g')
-  let str = substitute(str,'>','\&gt;','g')
-  let str = substitute(str,'"','\&quot;','g')
-  if s:subtype() == 'xml'
-    let str = substitute(str,"'",'\&apos;','g')
-  elseif s:subtype() =~ 'html'
-    let changes = s:entities
-    while changes != ""
-      let orig = matchstr(changes,'.')
-      let repl = matchstr(changes,'^.\zs.\{-\}\ze\%(\n\|$\)')
-      let changes = substitute(changes,'^.\{-\}\%(\n\|$\)','','')
-      let str = substitute(str,'\M'.orig,'\&'.repl.';','g')
-    endwhile
-  endif
-  return str
-endfunction
-
-function! s:XmlDecode(str)
-  let str = substitute(a:str,'&#\%(0*38\|x0*26\);','&amp;','g')
-  let changes = s:entities
-  while changes != ""
-    let orig = matchstr(changes,'.')
-    let repl = matchstr(changes,'^.\zs.\{-\}\ze\%(\n\|$\)')
-    let changes = substitute(changes,'^.\{-\}\%(\n\|$\)','','')
-    let str = substitute(str,'&'.repl.';',orig == '&' ? '\&' : orig,'g')
-  endwhile
-  let str = substitute(str,'&#\(\d\+\);','\=nr2char(submatch(1))','g')
-  let str = substitute(str,'&#\(x\x\+\);','\=nr2char("0".submatch(1))','g')
-  let str = substitute(str,'&apos;',"'",'g')
-  let str = substitute(str,'&quot;','"','g')
-  let str = substitute(str,'&gt;','>','g')
-  let str = substitute(str,'&lt;','<','g')
-  return substitute(str,'&amp;','\&','g')
-endfunction
-
-function! s:opfuncUrlEncode(type)
-  return s:opfunc("UrlEncode",a:type)
-endfunction
-
-function! s:opfuncUrlDecode(type)
-  return s:opfunc("UrlDecode",a:type)
-endfunction
-
-function! s:opfuncXmlEncode(type)
-  return s:opfunc("XmlEncode",a:type)
-endfunction
-
-function! s:opfuncXmlDecode(type)
-  return s:opfunc("XmlDecode",a:type)
-endfunction
-
-function! s:opfunc(algorithm,type)
-  let sel_save = &selection
-  let &selection = "inclusive"
-  let reg_save = @@
-  if a:type =~ '^\d\+$'
-    silent exe 'norm! ^v'.a:type.'$hy'
-  elseif a:type =~ '^.$'
-    silent exe "normal! `<" . a:type . "`>y"
-  elseif a:type == 'line'
-    silent exe "normal! '[V']y"
-  elseif a:type == 'block'
-    silent exe "normal! `[\<C-V>`]y"
-  else
-    silent exe "normal! `[v`]y"
-  endif
-  let @@ = s:{a:algorithm}(@@)
-  norm! gvp
-  let &selection = sel_save
-  let @@ = reg_save
-endfunction
-
 inoremap <silent> <SID>urlspace <C-R>=<SID>getinput()=~?'\%([?&]\<Bar>&amp;\)[%a-z0-9._~+-]*=[%a-z0-9._~+-]*$'?'+':'%20'<CR>
 
 function! s:urltab(htmlesc)
@@ -650,19 +473,6 @@ function! s:bspattern(pattern)
   endif
 endfunction
 
-nnoremap <silent> <Plug>ragtagUrlEncode :<C-U>set opfunc=<SID>opfuncUrlEncode<CR>g@
-vnoremap <silent> <Plug>ragtagUrlEncode :<C-U>call <SID>opfuncUrlEncode(visualmode())<CR>
-nnoremap <silent> <Plug>ragtagLineUrlEncode :<C-U>call <SID>opfuncUrlEncode(v:count1)<CR>
-nnoremap <silent> <Plug>ragtagUrlDecode :<C-U>set opfunc=<SID>opfuncUrlDecode<CR>g@
-vnoremap <silent> <Plug>ragtagUrlDecode :<C-U>call <SID>opfuncUrlDecode(visualmode())<CR>
-nnoremap <silent> <Plug>ragtagLineUrlDecode :<C-U>call <SID>opfuncUrlDecode(v:count1)<CR>
-nnoremap <silent> <Plug>ragtagXmlEncode :<C-U>set opfunc=<SID>opfuncXmlEncode<CR>g@
-vnoremap <silent> <Plug>ragtagXmlEncode :<C-U>call <SID>opfuncXmlEncode(visualmode())<CR>
-nnoremap <silent> <Plug>ragtagLineXmlEncode :<C-U>call <SID>opfuncXmlEncode(v:count1)<CR>
-nnoremap <silent> <Plug>ragtagXmlDecode :<C-U>set opfunc=<SID>opfuncXmlDecode<CR>g@
-vnoremap <silent> <Plug>ragtagXmlDecode :<C-U>call <SID>opfuncXmlDecode(visualmode())<CR>
-nnoremap <silent> <Plug>ragtagLineXmlDecode :<C-U>call <SID>opfuncXmlDecode(v:count1)<CR>
-
 inoremap <silent> <Plug>ragtagBSUrl     <C-R>=<SID>bspattern('%\x\x\=\<Bar>&amp;')<CR>
 inoremap <silent> <Plug>ragtagBSXml     <C-R>=<SID>bspattern('&#\=\w*;\<Bar><[^><]*>\=')<CR>
 inoremap <silent>  <SID>ragtagUrlEncode <C-R>=<SID>toggleurlescape()<CR>
@@ -679,12 +489,4 @@ if exists("g:ragtag_global_maps")
   imap     <C-X>&      <Plug>ragtagXmlEncode
   imap     <C-V>%      <Plug>ragtagUrlV
   imap     <C-V>&      <Plug>ragtagXmlV
-  map      <Leader>eu  <Plug>ragtagUrlEncode
-  map      <Leader>du  <Plug>ragtagUrlDecode
-  map      <Leader>ex  <Plug>ragtagXmlEncode
-  map      <Leader>dx  <Plug>ragtagXmlDecode
-  nmap     <Leader>euu <Plug>ragtagLineUrlEncode
-  nmap     <Leader>duu <Plug>ragtagLineUrlDecode
-  nmap     <Leader>exx <Plug>ragtagLineXmlEncode
-  nmap     <Leader>dxx <Plug>ragtagLineXmlDecode
 endif
