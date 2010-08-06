@@ -190,6 +190,29 @@ autocmd FileType html imap <F3> »
 autocmd FileType html imap <F4> &nbsp;— 
 autocmd BufNewFile,BufRead Gemfile setf ruby
 
+autocmd FileType ledger iab nal Активы:Наличные
+autocmd FileType ledger iab cred Обязательства:Кредитная альфа
+autocmd FileType ledger iab alfa Активы:Альфа
+autocmd FileType ledger iab zk Активы:Золотая Корона
+autocmd FileType ledger iab vtb Активы:ВТБ24
+autocmd FileType ledger iab tan Люди:Таня
+autocmd FileType ledger iab parf Люди:Парфиненко
+autocmd FileType ledger iab pit Расходы:Питание
+autocmd FileType ledger iab prod Расходы:Продукты
+
+command! TexMode call s:TexMode()
+function! s:TexMode()
+    colo eclipse
+    set guifont=DejaVu\ Sans\ Mono\ 11
+endfunction
+
+function! s:TexOnLoad()
+    set tw=80
+    call s:TexMode()
+endfunction
+
+autocmd FileType tex call s:TexOnLoad()
+
 let NERDTreeIgnore=['\.vim$', '\~$', '\.pyc']
 
 "define :HighlightExcessColumns command to highlight the offending parts of
