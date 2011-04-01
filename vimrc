@@ -135,23 +135,7 @@ syntax on
 "hide buffers when not displayed
 set hidden
 
-"Font & colormap settings
-set background=dark
-if has("gui_macvim")
-    " Font for the Mac
-    set guifont=Monaco:h12.00
-    set noanti
-    set columns=115
-    set lines=42
-elseif has("gui")
-    " Font on the Linux
-    set guifont=Terminus\ 11
-endif
-if has("gui")
-    color metacosm
-else
-    color vividchalk
-endif
+color vividchalk
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
