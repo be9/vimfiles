@@ -22,3 +22,9 @@
 [submodule "bundle/command-t"]
 	path = bundle/command-t
 	url = git://git.wincent.com/command-t.git
+[submodule "bundle/ack.vim"]
+	path = bundle/ack.vim
+	url = git://github.com/mileszs/ack.vim
+[submodule "bundle/scss-syntax-vim"]
+	path = bundle/scss-syntax-vim
+	url = git://github.com/cakebaker/scss-syntax.vim.git
