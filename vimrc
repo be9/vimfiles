@@ -186,7 +186,7 @@ autocmd FileType ledger iab prod Расходы:Продукты
 
 command! TexMode call s:TexMode()
 function! s:TexMode()
-    colo eclipse
+"    colo eclipse
     set guifont=DejaVu\ Sans\ Mono\ 11
 endfunction
 
