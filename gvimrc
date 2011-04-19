@@ -24,7 +24,6 @@ else
     colorscheme solarized
 endif
 endfunction
-command! Togbg call ToggleBackground()
-nnoremap <F6> :call ToggleBackground()<CR>
-inoremap <F6> <ESC>:call ToggleBackground()<CR>a
-vnoremap <F6> <ESC>:call ToggleBackground()<CR>
+
+"call togglebg#map("<F6>")
+nmap <F6> :NERDTreeFind<CR>
