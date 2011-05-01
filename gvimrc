@@ -25,5 +25,5 @@ else
 endif
 endfunction
 
-"call togglebg#map("<F6>")
+call togglebg#map("<F5>")
 nmap <F6> :NERDTreeFind<CR>

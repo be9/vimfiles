@@ -217,4 +217,12 @@ let g:clj_paren_rainbow=1
 
 command ChDir lcd %:p:h
 
+if !has('macvim')
+    let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+endif
+
+
+filetype plugin indent on
+syntax on
+
 call pathogen#runtime_append_all_bundles()

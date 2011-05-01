@@ -31,3 +31,6 @@
 [submodule "bundle/vim-coffee-script"]
 	path = bundle/vim-coffee-script
 	url = git://github.com/kchmck/vim-coffee-script
+[submodule "bundle/vimoutliner"]
+	path = bundle/vimoutliner
+	url = git://github.com/vimoutliner/vimoutliner
