@@ -184,6 +184,9 @@ autocmd FileType ledger iab parf Люди:Парфиненко
 autocmd FileType ledger iab pit Расходы:Питание
 autocmd FileType ledger iab prod Расходы:Продукты
 
+autocmd BufRead *.otl setf vo_base
+autocmd FileType vo_base set nolist noet
+
 command! TexMode call s:TexMode()
 function! s:TexMode()
 "    colo eclipse
@@ -220,7 +223,6 @@ command ChDir lcd %:p:h
 if !has('macvim')
     let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 endif
-
 
 filetype plugin indent on
 syntax on
