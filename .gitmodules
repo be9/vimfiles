@@ -52,3 +52,6 @@
 [submodule "vim-javascript"]
 	path = bundle/vim-javascript
 	url = git://github.com/pangloss/vim-javascript
+[submodule "bundle/vim-bufexplorer"]
+	path = bundle/vim-bufexplorer
+	url = git://github.com/slack/vim-bufexplorer
