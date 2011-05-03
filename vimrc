@@ -227,4 +227,19 @@ endif
 filetype plugin indent on
 syntax on
 
+" Command-T configuration
+let g:CommandTMaxHeight=20
+
+map <Leader>rt :!ctags --extra=+f -R *<CR><CR>
+map <C-\> :tnext<CR>
+
+" gist-vim defaults
+if has("mac")
+  let g:gist_clip_command = 'pbcopy'
+elseif has("unix")
+  let g:gist_clip_command = 'xclip -selection clipboard'
+endif
+let g:gist_detect_filetype = 1
+let g:gist_open_browser_after_post = 1
+
 call pathogen#runtime_append_all_bundles()

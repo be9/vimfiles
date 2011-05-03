@@ -34,3 +34,12 @@
 [submodule "bundle/vimoutliner"]
 	path = bundle/vimoutliner
 	url = git://github.com/vimoutliner/vimoutliner
+[submodule "bundle/taglist"]
+	path = bundle/taglist
+	url = git://github.com/vim-scripts/taglist.vim
+[submodule "bundle/gist-vim"]
+	path = bundle/gist-vim
+	url = git://github.com/mattn/gist-vim
+[submodule "bundle/ZoomWin"]
+	path = bundle/ZoomWin
+	url = git://github.com/vim-scripts/ZoomWin
