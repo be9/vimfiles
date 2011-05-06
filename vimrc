@@ -215,8 +215,8 @@ function! s:HighlightExcessColumns(width)
     endif
 endfunction
 
-let g:clj_highlight_builtins=1
-let g:clj_paren_rainbow=1
+"let g:clj_highlight_builtins=1
+"let g:clj_paren_rainbow=1
 
 command ChDir lcd %:p:h
 
