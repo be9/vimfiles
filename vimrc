@@ -220,7 +220,7 @@ endfunction
 
 command ChDir lcd %:p:h
 
-if !has('macvim')
+if !has('gui_macvim')
     let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 endif
 
