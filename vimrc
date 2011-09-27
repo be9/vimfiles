@@ -122,6 +122,8 @@ set scrolloff=3
 set sidescrolloff=7
 set sidescroll=1
 
+call pathogen#infect()
+
 "load ftplugins and indent files
 filetype plugin on
 filetype indent on
@@ -224,7 +226,6 @@ if !has('gui_macvim')
     let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 endif
 
-filetype plugin indent on
 syntax on
 
 " Command-T configuration
@@ -241,5 +242,3 @@ elseif has("unix")
 endif
 let g:gist_detect_filetype = 1
 let g:gist_open_browser_after_post = 1
-
-call pathogen#runtime_append_all_bundles()
