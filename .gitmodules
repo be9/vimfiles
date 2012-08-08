@@ -64,3 +64,6 @@
 [submodule "bundle/vim-bundler"]
 	path = bundle/vim-bundler
 	url = git://github.com/tpope/vim-bundler.git
+[submodule "bundle/vim-slim"]
+	path = bundle/vim-slim
+	url = https://github.com/bbommarito/vim-slim
