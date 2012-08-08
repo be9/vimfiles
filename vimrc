@@ -9,6 +9,8 @@ set backspace=indent,eol,start
 set nobackup
 set nowritebackup
 
+set dir=~/.vim/backups//
+
 "store lots of :cmdline history
 set history=1000
 
