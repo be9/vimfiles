@@ -10,7 +10,8 @@ if has("gui_macvim")
     set lines=42
 elseif has("gui")
     " Font on the Linux
-    set guifont=Terminus\ 11
+    "set guifont=Terminus\ 11
+    set guifont=Ubuntu\ Mono\ 12
 endif
 
 color solarized
