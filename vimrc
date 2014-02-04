@@ -173,6 +173,7 @@ nmap <silent> <Leader>p :NERDTreeToggle<CR>
 
 autocmd FileType ruby,cmake,php set ts=2 sw=2 smartindent smarttab
 autocmd FileType python set ts=4 sw=4 smartindent smarttab
+autocmd FileType cpp set ts=4 sw=4 smartindent smarttab et
 autocmd FileType html imap <F2> «
 autocmd FileType html imap <F3> »
 autocmd FileType html imap <F4> &nbsp;— 
