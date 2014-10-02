@@ -181,6 +181,7 @@ autocmd BufNewFile,BufRead Gemfile setf ruby
 
 autocmd FileType ledger iab nal Активы:Наличные
 autocmd FileType ledger iab cred Обязательства:Кредитная альфа
+autocmd FileType ledger iab tcre Обязательства:Таня:Кредитка
 autocmd FileType ledger iab alfa Активы:Альфа
 autocmd FileType ledger iab zk Активы:Золотая Корона
 autocmd FileType ledger iab vtb Активы:ВТБ24

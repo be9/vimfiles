@@ -103,3 +103,6 @@
 [submodule "bundle/rust"]
 	path = bundle/rust
 	url = https://github.com/wting/rust.vim
+[submodule "bundle/vim-jst"]
+	path = bundle/vim-jst
+	url = https://github.com/briancollins/vim-jst
