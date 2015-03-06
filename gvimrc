@@ -15,6 +15,7 @@ elseif has("gui")
 endif
 
 color solarized
+set background=light
 
 function! ToggleBackground()
     if (g:solarized_style=="dark")
