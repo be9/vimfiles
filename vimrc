@@ -2,6 +2,11 @@
 "This must be first, because it changes other options as a side effect.
 set nocompatible
 
+" Disable tsuquyomi for older vim
+if v:version < 704
+  let g:loaded_tsuquyomi = 1
+endif
+
 "allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 
