@@ -115,8 +115,8 @@
 [submodule "bundle/tsuquyomi"]
 	path = bundle/tsuquyomi
 	url = https://github.com/Quramy/tsuquyomi.git
-[submodule "/Users/odashevskii/.vim/bundle/vimproc.vim"]
-	path = /Users/odashevskii/.vim/bundle/vimproc.vim
+[submodule "bundle/vimproc.vim"]
+	path = bundle/vimproc.vim
 	url = https://github.com/Shougo/vimproc.vim.git
 [submodule "bundle/vim-js-indent"]
 	path = bundle/vim-js-indent
