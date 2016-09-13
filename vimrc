@@ -154,6 +154,9 @@ autocmd BufRead *.txt set tw=78
 autocmd BufRead Thorfile,*.thor setf ruby
 autocmd BufRead *.ldg setf ledger
 
+" Javascript
+autocmd BufRead *.js set tw=78 sw=2 ts=2 sts=2 et
+
 "Make <c-l> clear the highlight as well as redraw
 nnoremap <C-L> :nohls<CR><C-L>
 inoremap <C-L> <C-O>:nohls<CR>
