@@ -129,8 +129,6 @@ set scrolloff=3
 set sidescrolloff=7
 set sidescroll=1
 
-call pathogen#infect()
-
 "load ftplugins and indent files
 filetype plugin on
 filetype indent on
