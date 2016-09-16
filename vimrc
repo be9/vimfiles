@@ -142,7 +142,7 @@ syntax on
 "hide buffers when not displayed
 set hidden
 
-color vividchalk
+"color vividchalk
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
@@ -255,11 +255,61 @@ let g:gist_detect_filetype = 1
 let g:gist_open_browser_after_post = 1
 
 " RSpec.vim mappings
-map <Leader>t :call RunCurrentSpecFile()<CR>
-map <Leader>s :call RunNearestSpec()<CR>
-map <Leader>l :call RunLastSpec()<CR>
-map <Leader>a :call RunAllSpecs()<CR>
+"map <Leader>t :call RunCurrentSpecFile()<CR>
+"map <Leader>s :call RunNearestSpec()<CR>
+"map <Leader>l :call RunLastSpec()<CR>
+"map <Leader>a :call RunAllSpecs()<CR>
 
 "let g:rspec_command = "Dispatch bin/rspec {spec}"
 "let g:rspec_command = "compiler rspec | set makeprg=zeus | Make rspec {spec}"
-let g:rspec_command = "compiler rspec | set makeprg=bin/rspec | Make {spec}"
+"let g:rspec_command = "compiler rspec | set makeprg=bin/rspec | Make {spec}"
+"
+"
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+
+call plug#begin('~/.vim/plugged')
+
+"Plug 'derekwyatt/vim-sbt'
+"Plug 'derekwyatt/vim-scala'
+
+Plug 'Quramy/tsuquyomi'
+Plug 'Shougo/vimproc.vim'
+Plug 'altercation/vim-colors-solarized'
+Plug 'briancollins/vim-jst'
+Plug 'cakebaker/scss-syntax.vim'
+Plug 'cespare/vim-toml'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'ekalinin/Dockerfile.vim'
+Plug 'guns/vim-clojure-static'
+Plug 'kchmck/vim-coffee-script'
+Plug 'leafgarland/typescript-vim'
+Plug 'mattn/gist-vim'
+Plug 'mileszs/ack.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree'
+Plug 'slim-template/vim-slim'
+Plug 'thoughtbot/vim-rspec'
+Plug 'tpope/vim-bundler'
+Plug 'tpope/vim-classpath'
+Plug 'tpope/vim-cucumber'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-fireplace'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-git'
+Plug 'tpope/vim-ragtag'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-surround'
+"Plug 'vim-scripts/VimClojure'
+"Plug 'vim-scripts/ZoomWin'
+Plug 'vim-scripts/a.vim'
+"Plug 'vim-scripts/paredit.vim'
+"Plug 'vim-scripts/taglist.vim'
+"Plug 'vimoutliner/vimoutliner'
+Plug 'wting/rust.vim'
+
+call plug#end()
+
