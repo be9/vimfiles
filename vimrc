@@ -156,6 +156,7 @@ autocmd BufRead *.ldg setf ledger
 
 " Javascript
 autocmd BufRead *.js set tw=78 sw=2 ts=2 sts=2 et
+autocmd BufRead *.js setlocal cinoptions=j1,J1,:0,(0
 
 "Make <c-l> clear the highlight as well as redraw
 nnoremap <C-L> :nohls<CR><C-L>
