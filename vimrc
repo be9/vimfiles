@@ -7,17 +7,11 @@ if v:version < 704
   let g:loaded_tsuquyomi = 1
 endif
 
-"allow backspacing over everything in insert mode
-set backspace=indent,eol,start
-
 "disable backups
 set nobackup
 set nowritebackup
 
 set dir=~/.vim/backups//
-
-"store lots of :cmdline history
-set history=1000
 
 set showcmd     "show incomplete cmds down the bottom
 set showmode    "show current mode down the bottom
@@ -57,7 +51,6 @@ set statusline+=%=      "left/right separator
 set statusline+=%c,     "cursor column
 set statusline+=%l/%L   "cursor line/total lines
 set statusline+=\ %P    "percent through file
-set laststatus=2
 
 "recalculate the trailing whitespace warning when idle, and after saving
 autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
@@ -111,33 +104,11 @@ endfunction
 set shiftwidth=4
 set softtabstop=4
 set expandtab
-set autoindent
 
 "folding settings
 set foldmethod=indent   "fold based on indent
 set foldnestmax=3       "deepest fold is 3 levels
 set nofoldenable        "dont fold by default
-
-"display tabs and trailing spaces
-set list
-set listchars=tab:▷⋅,trail:⋅,nbsp:⋅
-
-set formatoptions-=o "dont continue comments when pushing o/O
-
-"vertical/horizontal scroll off settings
-set scrolloff=3
-set sidescrolloff=7
-set sidescroll=1
-
-"load ftplugins and indent files
-filetype plugin on
-filetype indent on
-
-"turn on syntax highlighting
-syntax on
-
-"tell the term has 256 colors
-"set t_Co=256
 
 "hide buffers when not displayed
 set hidden
@@ -155,10 +126,6 @@ autocmd BufRead *.ldg setf ledger
 " Javascript
 autocmd BufRead *.js set tw=78 sw=2 ts=2 sts=2 et
 autocmd BufRead *.js setlocal cinoptions=j1,J1,:0,(0
-
-"Make <c-l> clear the highlight as well as redraw
-nnoremap <C-L> :nohls<CR><C-L>
-inoremap <C-L> <C-O>:nohls<CR>
 
 "Use C-J and C-K for convenient jumping between the hor splits
 nmap <C-J> <C-W>j<C-W>_
@@ -181,24 +148,13 @@ nmap <silent> <Leader>p :NERDTreeToggle<CR>
 autocmd FileType ruby,cmake,php set ts=2 sw=2 smartindent smarttab
 autocmd FileType python set ts=4 sw=4 smartindent smarttab
 autocmd FileType cpp set ts=4 sw=4 smartindent smarttab et
-autocmd FileType html imap <F2> «
-autocmd FileType html imap <F3> »
-autocmd FileType html imap <F4> &nbsp;— 
-autocmd BufNewFile,BufRead Gemfile setf ruby
+"autocmd FileType html imap <F2> «
+"autocmd FileType html imap <F3> »
+"autocmd FileType html imap <F4> &nbsp;— 
+"autocmd BufNewFile,BufRead Gemfile setf ruby
 
-autocmd FileType ledger iab nal Активы:Наличные
-autocmd FileType ledger iab cred Обязательства:Кредитная альфа
-autocmd FileType ledger iab tcre Обязательства:Таня:Кредитка
-autocmd FileType ledger iab alfa Активы:Альфа
-autocmd FileType ledger iab zk Активы:Золотая Корона
-autocmd FileType ledger iab vtb Активы:ВТБ24
-autocmd FileType ledger iab tan Люди:Таня
-autocmd FileType ledger iab parf Люди:Парфиненко
-autocmd FileType ledger iab pit Расходы:Питание
-autocmd FileType ledger iab prod Расходы:Продукты
-
-autocmd BufRead *.otl setf vo_base
-autocmd FileType vo_base set nolist noet
+"autocmd BufRead *.otl setf vo_base
+"autocmd FileType vo_base set nolist noet
 
 command! TexMode call s:TexMode()
 function! s:TexMode()
@@ -231,19 +187,14 @@ endfunction
 "let g:clj_highlight_builtins=1
 "let g:clj_paren_rainbow=1
 
-command ChDir lcd %:p:h
+command! ChDir lcd %:p:h
 
 if !has('gui_macvim')
     let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 endif
 
-syntax on
-
-" Command-T configuration
-let g:CommandTMaxHeight=20
-
-map <Leader>rt :!ctags --extra=+f -R *<CR><CR>
-map <C-\> :tnext<CR>
+"map <Leader>rt :!ctags --extra=+f -R *<CR><CR>
+"map <C-\> :tnext<CR>
 
 " gist-vim defaults
 if has("mac")
@@ -274,6 +225,7 @@ call plug#begin('~/.vim/plugged')
 "Plug 'derekwyatt/vim-sbt'
 "Plug 'derekwyatt/vim-scala'
 
+Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'Quramy/tsuquyomi'
 Plug 'Shougo/vimproc.vim'
 Plug 'altercation/vim-colors-solarized'
@@ -288,12 +240,12 @@ Plug 'leafgarland/typescript-vim'
 Plug 'mattn/gist-vim'
 Plug 'mileszs/ack.vim'
 Plug 'pangloss/vim-javascript'
-Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'slim-template/vim-slim'
 Plug 'thoughtbot/vim-rspec'
 Plug 'tpope/vim-bundler'
 Plug 'tpope/vim-classpath'
+Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-cucumber'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-endwise'
@@ -302,6 +254,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-ragtag'
 Plug 'tpope/vim-rails'
+Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 "Plug 'vim-scripts/VimClojure'
 "Plug 'vim-scripts/ZoomWin'
