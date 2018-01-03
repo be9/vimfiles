@@ -263,6 +263,7 @@ Plug 'vim-scripts/a.vim'
 "Plug 'vim-scripts/taglist.vim'
 "Plug 'vimoutliner/vimoutliner'
 Plug 'wting/rust.vim'
+Plug 'digitaltoad/vim-pug'
 
 call plug#end()
 
