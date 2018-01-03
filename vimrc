@@ -145,12 +145,12 @@ let g:proj_flags = 'imstgv'
 
 nmap <silent> <Leader>p :NERDTreeToggle<CR>
 
-autocmd FileType ruby,cmake,php set ts=2 sw=2 smartindent smarttab
+autocmd FileType ruby,cmake,php,typescript set ts=2 sw=2 sts=2 smartindent smarttab
 autocmd FileType python set ts=4 sw=4 smartindent smarttab
 autocmd FileType cpp set ts=4 sw=4 smartindent smarttab et
 "autocmd FileType html imap <F2> «
 "autocmd FileType html imap <F3> »
-"autocmd FileType html imap <F4> &nbsp;— 
+"autocmd FileType html imap <F4> &nbsp;—
 "autocmd BufNewFile,BufRead Gemfile setf ruby
 
 "autocmd BufRead *.otl setf vo_base
@@ -170,6 +170,7 @@ endfunction
 autocmd FileType tex call s:TexOnLoad()
 
 let NERDTreeIgnore=['\.vim$', '\~$', '\.pyc']
+let g:ctrlp_custom_ignore={'dir':'\v(build|node_modules)'}
 
 "define :HighlightExcessColumns command to highlight the offending parts of
 "lines that are "too long". where "too long" is defined by &textwidth or an
@@ -226,7 +227,7 @@ call plug#begin('~/.vim/plugged')
 "Plug 'derekwyatt/vim-scala'
 
 Plug 'ConradIrwin/vim-bracketed-paste'
-Plug 'Quramy/tsuquyomi'
+" Plug 'Quramy/tsuquyomi'
 Plug 'Shougo/vimproc.vim'
 Plug 'altercation/vim-colors-solarized'
 Plug 'briancollins/vim-jst'
@@ -264,6 +265,7 @@ Plug 'vim-scripts/a.vim'
 "Plug 'vimoutliner/vimoutliner'
 Plug 'wting/rust.vim'
 Plug 'digitaltoad/vim-pug'
+Plug 'fatih/vim-go'
 
 call plug#end()
 

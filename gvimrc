@@ -4,7 +4,9 @@ set background=dark
 if has("gui_macvim")
     " Font for the Mac
 "    set guifont=Monaco:h12.00
-    set guifont=Menlo\ Regular:h12.00
+"    set guifont=Menlo\ Regular:h12.00
+    set guifont=Fira\ Code:h10
+    set macligatures
     set anti
     set columns=115
     set lines=42
